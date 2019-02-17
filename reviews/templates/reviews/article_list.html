@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>All Reviews</h1>
+    {% if article_list %}
+    <ul>
+        {% for article in article_list %}
+            <li>
+                <a href="{{ article.get_absolute_url }}">{{ article.title }}</a> ({{ article.author }})
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        <p>There are no reviews available</p>
+    {% endif %}
+{% endblock %}
+
+{% block pagination %}
+  {% if is_paginated %}
+    <div class="pagination">
+      <span class="page-links">
+        {% if page_obj.has_previous %}
+          <a href="{{ request.path }}?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+        <span class="page-current">
+          <p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</p>
+        </span>
+        {% if page_obj.has_next %}
+          <a href="{{ request.path }}?page={{ page_obj.next_page_number }}">next</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+{% endblock %} 

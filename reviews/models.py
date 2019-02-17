@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.urls import reverse
 
 # Create your models here.
 
@@ -13,6 +14,9 @@ class Author(models.Model):
 
     def email(self):
         return self.user.email
+
+    def get_absolute_url(self):
+        return reverse('writer-detail', args=[str(self.user.id)])
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -34,7 +38,7 @@ class Article(models.Model):
         ordering = ['title']
 
     def get_absolute_url(self):
-        return reverse('review-detail', args=[str(self.id)])
+        return reverse('article-detail', args=[str(self.id)])
 
     def __str__(self):
         return self.title
