@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, get_list_or_404
+from django.views import generic
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
 
 from reviews.models import Author, Article, Comment
-from django.views import generic
+from reviews.forms import ArticleForm
 
 def index(request):
 
@@ -14,7 +18,8 @@ def index(request):
 
     context = {
         'num_articles': num_articles,
-        'last_article': last_article
+        'last_article': last_article,
+        'authenticated': request.user.is_authenticated
     }
 
     return render(request, 'index.html', context=context)
@@ -39,4 +44,14 @@ def author_detail_view(request, pk):
     return render(request, 'reviews/author_detail.html', context=context)
 
 
+@permission_required('reviews.can_mark_returned')
+def ArticleCreate(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
 
+        if form.is_valid():
+            title = form.cleaned_data['title']
+            body = form.cleaned_data['body']
+            author = request.user
+            new_article = Article(title=title, body=body, author=author)
+            new_article.save()
