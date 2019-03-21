@@ -19,14 +19,13 @@ def index(request):
     context = {
         'num_articles': num_articles,
         'last_article': last_article,
-        'authenticated': request.user.is_authenticated
     }
 
     return render(request, 'index.html', context=context)
 
 class ArticleListView(generic.ListView):
     model = Article
-    paginate_by = 10
+    paginate_by = 25
 
 class ArticleDetailView(generic.DetailView):
     model = Article

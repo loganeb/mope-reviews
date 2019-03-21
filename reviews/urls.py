@@ -7,5 +7,5 @@ urlpatterns = [
     path('article/<int:pk>', views.ArticleDetailView.as_view(), name='article-detail'),
     path('writers/', views.AuthorListView.as_view(), name='writers'),
     path('writer/<int:pk>', views.author_detail_view, name='writer-detail'),
-    path('submit/', views.ArticleCreate, name='sumbit-article'),
+    # path('submit/', views.ArticleCreate, name='sumbit-article'),
 ]

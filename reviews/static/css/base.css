@@ -1,0 +1,19 @@
+@import "./colors.css";
+@import "./response.css";
+
+body, html {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.site-body {
+    height: 100vh;
+}
+
+.sidebar{
+    padding: 15px;
+    margin: 0;
+    height: 100vh;
+}
